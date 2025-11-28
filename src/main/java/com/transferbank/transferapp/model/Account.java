@@ -1,4 +1,4 @@
-package model;
+package com.transferbank.transferapp.model;
 
 import jakarta.persistence.*;
 

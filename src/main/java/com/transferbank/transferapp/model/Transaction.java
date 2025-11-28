@@ -1,10 +1,11 @@
-package model;
+package com.transferbank.transferapp.model;
 
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "tbl_transaction")
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,11 +17,11 @@ public class Transaction {
     private Double amount;
 
     @ManyToOne
-    @Column(name = "transaction_debit_account")
+    @JoinColumn(name = "transaction_debit_account")
     private Account debitAccount;
 
     @ManyToOne
-    @Column(name = "transaction_debit_account")
+    @JoinColumn(name = "transaction_credit_account")
     private Account creditAccount;
 
     public Integer getNumber() {
