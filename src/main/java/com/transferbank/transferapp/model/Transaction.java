@@ -11,7 +11,7 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_number")
     private Integer number;
-    @Column(name = "transaction_timestamp")
+    @Column(name = "transaction_timestamp", nullable = true)
     private LocalDateTime timestamp;
     @Column(name = "transaction_amount")
     private Double amount;

@@ -9,4 +9,7 @@ public interface IAccountService {
     public Account findAccountById(Integer id);
     public List<Account> findAllAccounts();
 
+    public Account debitAmountFromAccount(Integer accountTargetId, Double amount);
+    public Account creditAmountFromAccount(Integer accountTargetId, Double amount);
+
 }

@@ -34,3 +34,4 @@ build/
 
 ### Local DB ###
 *.mv.db
+*.trace.db

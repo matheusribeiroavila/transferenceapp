@@ -31,4 +31,17 @@ public class AccountService implements IAccountService{
         return accountRepository.findAll();
     }
 
+    @Override
+    public Account debitAmountFromAccount(Integer accountTargetId, Double amount) {
+        Account accountTarget = accountRepository.findById(accountTargetId).orElseThrow(() -> new NotFoundException("Não foi possível completar operação de debito. Conta número ["+accountTargetId+"] não encontrado."));
+        accountTarget.withdraw(amount);
+        return accountRepository.save(accountTarget);
+    }
+
+    @Override
+    public Account creditAmountFromAccount(Integer accountTargetId, Double amount) {
+        Account accountTarget = accountRepository.findById(accountTargetId).orElseThrow(() -> new NotFoundException("Não foi possível completar operação de crédito. Conta número ["+accountTargetId+"] não encontrado."));
+        accountTarget.deposit(amount);
+        return accountRepository.save(accountTarget);
+    }
 }
