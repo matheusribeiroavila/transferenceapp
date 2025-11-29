@@ -1,5 +1,6 @@
 package com.transferbank.transferapp.service;
 
+import com.transferbank.transferapp.dto.TransactionDTO;
 import com.transferbank.transferapp.exception.NotFoundException;
 import com.transferbank.transferapp.model.Account;
 import com.transferbank.transferapp.model.Transaction;
@@ -7,6 +8,7 @@ import com.transferbank.transferapp.repository.TransactionRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,17 +24,20 @@ public class TransactionService implements ITransactionService{
     }
 
     @Override
-    public Transaction addNewTransaction(Transaction transaction) {
+    public Transaction addNewTransaction(TransactionDTO dto) {
 
         //Debitando e creditando as contas targets
-        Account accountDebitedTarget = accountService.debitAmountFromAccount(transaction.getDebitAccount().getNumber(), transaction.getAmount());
-        Account accountCreditTarget = accountService.creditAmountFromAccount(transaction.getCreditAccount().getNumber(), transaction.getAmount());
+        Account accountDebitedTarget = accountService.debitAmountFromAccount(dto.debitAccountNumber(), dto.amount());
+        Account accountCreditTarget = accountService.creditAmountFromAccount(dto.creditAccountNumber(), dto.amount());
 
-        //Preenchendo dados atualizados na transação
-        transaction.setDebitAccount(accountDebitedTarget);
-        transaction.setCreditAccount(accountCreditTarget);
+        //Construindo a entidade de transação
+        Transaction transactionTarget = new Transaction();
+        transactionTarget.setAmount(dto.amount());
+        transactionTarget.setDebitAccount(accountDebitedTarget);
+        transactionTarget.setCreditAccount(accountCreditTarget);
+        transactionTarget.setTimestamp(LocalDateTime.now());
 
-        return transactionRepository.save(transaction);
+        return transactionRepository.save(transactionTarget);
     }
 
     @Override

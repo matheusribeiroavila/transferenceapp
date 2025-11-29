@@ -1,5 +1,6 @@
 package com.transferbank.transferapp.controller;
 
+import com.transferbank.transferapp.dto.TransactionDTO;
 import com.transferbank.transferapp.model.Account;
 import com.transferbank.transferapp.model.Transaction;
 import com.transferbank.transferapp.service.IAccountService;
@@ -32,8 +33,7 @@ public class TransactionController {
     }
 
     @PostMapping("/transaction")
-    public ResponseEntity<Transaction> addNewTransaction(@RequestBody Transaction transaction){
-        transaction.setTimestamp(LocalDateTime.now());
+    public ResponseEntity<Transaction> addNewTransaction(@RequestBody TransactionDTO transaction){
         return ResponseEntity.status(201).body(transactionService.addNewTransaction(transaction));
     }
 }
